@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../widgets/custom_button.dart';
 import '../../../widgets/empty_state_widget.dart';
 import '../../../widgets/stat_card.dart';
 import '../../../widgets/status_badge.dart';
@@ -13,7 +12,8 @@ class AgentDashboardScreen extends ConsumerStatefulWidget {
   const AgentDashboardScreen({super.key});
 
   @override
-  ConsumerState<AgentDashboardScreen> createState() => _AgentDashboardScreenState();
+  ConsumerState<AgentDashboardScreen> createState() =>
+      _AgentDashboardScreenState();
 }
 
 class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen> {
@@ -37,17 +37,25 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen> {
     final agentName = authState.profile?.fullName ?? 'Technician';
 
     final allRequests = requestsState.requests;
-    final assignedCount = allRequests.where((r) => r.status == 'ASSIGNED').length;
-    final inProgressCount = allRequests.where((r) => r.status == 'ACCEPTED' || r.status == 'IN_PROGRESS').length;
-    final completedCount = allRequests.where((r) => r.status == 'COMPLETED').length;
+    final assignedCount =
+        allRequests.where((r) => r.status == 'ASSIGNED').length;
+    final inProgressCount = allRequests
+        .where((r) => r.status == 'ACCEPTED' || r.status == 'IN_PROGRESS')
+        .length;
+    final completedCount =
+        allRequests.where((r) => r.status == 'COMPLETED').length;
 
     List<dynamic> filteredRequests;
     if (_activeTab == 'PENDING') {
-      filteredRequests = allRequests.where((r) => r.status == 'ASSIGNED').toList();
+      filteredRequests =
+          allRequests.where((r) => r.status == 'ASSIGNED').toList();
     } else if (_activeTab == 'IN_PROGRESS') {
-      filteredRequests = allRequests.where((r) => r.status == 'ACCEPTED' || r.status == 'IN_PROGRESS').toList();
+      filteredRequests = allRequests
+          .where((r) => r.status == 'ACCEPTED' || r.status == 'IN_PROGRESS')
+          .toList();
     } else if (_activeTab == 'COMPLETED') {
-      filteredRequests = allRequests.where((r) => r.status == 'COMPLETED').toList();
+      filteredRequests =
+          allRequests.where((r) => r.status == 'COMPLETED').toList();
     } else {
       filteredRequests = allRequests;
     }
@@ -60,11 +68,17 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen> {
           children: [
             const Text(
               'Technician Portal',
-              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.textSecondary),
+              style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textSecondary),
             ),
             Text(
               'Welcome, $agentName',
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: AppColors.textPrimary),
+              style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.textPrimary),
             ),
           ],
         ),
@@ -74,9 +88,9 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen> {
             tooltip: 'Sign Out',
             onPressed: () async {
               await ref.read(authProvider.notifier).logout();
-              if (mounted) {
-                context.go('/login');
-              }
+              if (!context.mounted)
+                return; // ignore: use_build_context_synchronously
+              context.go('/login');
             },
           ),
         ],
@@ -84,7 +98,9 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen> {
       body: RefreshIndicator(
         onRefresh: () async {
           if (authState.profile != null) {
-            await ref.read(requestsProvider.notifier).fetchAgentRequests(authState.profile!.id);
+            await ref
+                .read(requestsProvider.notifier)
+                .fetchAgentRequests(authState.profile!.id);
           }
         },
         child: SingleChildScrollView(
@@ -95,7 +111,10 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen> {
             children: [
               const Text(
                 'Workload & Field Queue',
-                style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: AppColors.textPrimary),
+                style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.textPrimary),
               ),
               const SizedBox(height: 12),
               Row(
@@ -132,7 +151,6 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen> {
                 ],
               ),
               const SizedBox(height: 24),
-
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
@@ -141,14 +159,15 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen> {
                     const SizedBox(width: 8),
                     _buildFilterChip('PENDING', 'Pending ($assignedCount)'),
                     const SizedBox(width: 8),
-                    _buildFilterChip('IN_PROGRESS', 'Active ($inProgressCount)'),
+                    _buildFilterChip(
+                        'IN_PROGRESS', 'Active ($inProgressCount)'),
                     const SizedBox(width: 8),
-                    _buildFilterChip('COMPLETED', 'Completed ($completedCount)'),
+                    _buildFilterChip(
+                        'COMPLETED', 'Completed ($completedCount)'),
                   ],
                 ),
               ),
               const SizedBox(height: 16),
-
               if (requestsState.isLoading)
                 const Center(
                   child: Padding(
@@ -160,7 +179,8 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen> {
                 const EmptyStateWidget(
                   icon: Icons.check_circle_outline,
                   title: 'No Work In This Queue',
-                  message: 'You have no assigned jobs in the selected category.',
+                  message:
+                      'You have no assigned jobs in the selected category.',
                 )
               else
                 ListView.separated(
@@ -192,7 +212,8 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen> {
         fontSize: 12,
       ),
       backgroundColor: Colors.white,
-      side: BorderSide(color: isSelected ? AppColors.primary : AppColors.cardBorder),
+      side: BorderSide(
+          color: isSelected ? AppColors.primary : AppColors.cardBorder),
       onSelected: (_) => setState(() => _activeTab = key),
     );
   }
@@ -211,7 +232,7 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen> {
           border: Border.all(color: AppColors.cardBorder),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.02),
+              color: Colors.black.withValues(alpha: 0.02),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -225,7 +246,10 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen> {
               children: [
                 Text(
                   req.requestId,
-                  style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 14, color: AppColors.primary),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w800,
+                      fontSize: 14,
+                      color: AppColors.primary),
                 ),
                 StatusBadge(status: req.status),
               ],
@@ -233,26 +257,32 @@ class _AgentDashboardScreenState extends ConsumerState<AgentDashboardScreen> {
             const SizedBox(height: 10),
             Text(
               req.service?.name ?? 'Assigned Job',
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: AppColors.textPrimary),
+              style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.textPrimary),
             ),
             const SizedBox(height: 4),
             Text(
               req.description,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontSize: 13, color: AppColors.textSecondary),
+              style:
+                  const TextStyle(fontSize: 13, color: AppColors.textSecondary),
             ),
             const SizedBox(height: 12),
             Row(
               children: [
-                const Icon(Icons.location_on_outlined, size: 14, color: AppColors.textMuted),
+                const Icon(Icons.location_on_outlined,
+                    size: 14, color: AppColors.textMuted),
                 const SizedBox(width: 4),
                 Expanded(
                   child: Text(
                     req.address,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(fontSize: 12, color: AppColors.textSecondary),
+                    style: const TextStyle(
+                        fontSize: 12, color: AppColors.textSecondary),
                   ),
                 ),
                 const SizedBox(width: 8),

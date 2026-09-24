@@ -13,7 +13,8 @@ class ServiceRequest {
   final String preferredTime;
   final String address;
   final String priority; // 'LOW', 'MEDIUM', 'HIGH'
-  final String status;   // 'CREATED', 'ASSIGNED', 'ACCEPTED', 'IN_PROGRESS', 'COMPLETED', 'CANCELLED'
+  final String
+      status; // 'CREATED', 'ASSIGNED', 'ACCEPTED', 'IN_PROGRESS', 'COMPLETED', 'CANCELLED'
   final String? notes;
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -53,7 +54,8 @@ class ServiceRequest {
       serviceId: json['service_id'] as String,
       agentId: json['agent_id'] as String?,
       description: json['description'] as String? ?? '',
-      preferredDate: DateFormatter.parseDate(json['preferred_date']) ?? DateTime.now(),
+      preferredDate:
+          DateFormatter.parseDate(json['preferred_date']) ?? DateTime.now(),
       preferredTime: json['preferred_time'] as String? ?? 'Anytime',
       address: json['address'] as String? ?? '',
       priority: (json['priority'] as String? ?? 'MEDIUM').toUpperCase(),
@@ -61,9 +63,15 @@ class ServiceRequest {
       notes: json['notes'] as String?,
       createdAt: DateFormatter.parseDate(json['created_at']),
       updatedAt: DateFormatter.parseDate(json['updated_at']),
-      service: json['service'] != null ? ServiceItem.fromJson(json['service'] as Map<String, dynamic>) : null,
-      customer: json['customer'] != null ? UserProfile.fromJson(json['customer'] as Map<String, dynamic>) : null,
-      agent: json['agent'] != null ? UserProfile.fromJson(json['agent'] as Map<String, dynamic>) : null,
+      service: json['service'] != null
+          ? ServiceItem.fromJson(json['service'] as Map<String, dynamic>)
+          : null,
+      customer: json['customer'] != null
+          ? UserProfile.fromJson(json['customer'] as Map<String, dynamic>)
+          : null,
+      agent: json['agent'] != null
+          ? UserProfile.fromJson(json['agent'] as Map<String, dynamic>)
+          : null,
     );
   }
 

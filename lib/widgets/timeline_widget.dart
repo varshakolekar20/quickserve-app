@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../core/constants/app_colors.dart';
-import '../core/utils/status_helper.dart';
 
 class TimelineWidget extends StatelessWidget {
   final String currentStatus;
@@ -16,16 +15,35 @@ class TimelineWidget extends StatelessWidget {
     final isCancelled = status == 'CANCELLED';
 
     final steps = [
-      {'key': 'CREATED', 'label': 'Created', 'desc': 'Request submitted by customer'},
-      {'key': 'ASSIGNED', 'label': 'Assigned', 'desc': 'Technician assigned by admin'},
-      {'key': 'ACCEPTED', 'label': 'Accepted', 'desc': 'Technician confirmed dispatch'},
-      {'key': 'IN_PROGRESS', 'label': 'In Progress', 'desc': 'Work is actively underway'},
-      {'key': 'COMPLETED', 'label': 'Completed', 'desc': 'Job successfully resolved'},
+      {
+        'key': 'CREATED',
+        'label': 'Created',
+        'desc': 'Request submitted by customer'
+      },
+      {
+        'key': 'ASSIGNED',
+        'label': 'Assigned',
+        'desc': 'Technician assigned by admin'
+      },
+      {
+        'key': 'ACCEPTED',
+        'label': 'Accepted',
+        'desc': 'Technician confirmed dispatch'
+      },
+      {
+        'key': 'IN_PROGRESS',
+        'label': 'In Progress',
+        'desc': 'Work is actively underway'
+      },
+      {
+        'key': 'COMPLETED',
+        'label': 'Completed',
+        'desc': 'Job successfully resolved'
+      },
     ];
 
-    final currentIndex = isCancelled
-        ? -1
-        : steps.indexWhere((s) => s['key'] == status);
+    final currentIndex =
+        isCancelled ? -1 : steps.indexWhere((s) => s['key'] == status);
 
     return Container(
       padding: const EdgeInsets.all(18),
@@ -50,9 +68,10 @@ class TimelineWidget extends StatelessWidget {
               ),
               if (isCancelled)
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
-                    color: AppColors.error.withOpacity(0.1),
+                    color: AppColors.error.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Text(
@@ -88,7 +107,9 @@ class TimelineWidget extends StatelessWidget {
                         Container(
                           width: 2,
                           height: 36,
-                          color: isPassed ? AppColors.success : AppColors.cardBorder,
+                          color: isPassed
+                              ? AppColors.success
+                              : AppColors.cardBorder,
                         ),
                     ],
                   ),
@@ -105,18 +126,26 @@ class TimelineWidget extends StatelessWidget {
                                 step['label']!,
                                 style: TextStyle(
                                   fontSize: 14,
-                                  fontWeight: isCurrent ? FontWeight.w700 : (isPassed ? FontWeight.w600 : FontWeight.w500),
+                                  fontWeight: isCurrent
+                                      ? FontWeight.w700
+                                      : (isPassed
+                                          ? FontWeight.w600
+                                          : FontWeight.w500),
                                   color: isCurrent
                                       ? AppColors.primary
-                                      : (isPassed ? AppColors.textPrimary : AppColors.textMuted),
+                                      : (isPassed
+                                          ? AppColors.textPrimary
+                                          : AppColors.textMuted),
                                 ),
                               ),
                               if (isCurrent) ...[
                                 const SizedBox(width: 8),
                                 Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 6, vertical: 2),
                                   decoration: BoxDecoration(
-                                    color: AppColors.primary.withOpacity(0.12),
+                                    color: AppColors.primary
+                                        .withValues(alpha: 0.12),
                                     borderRadius: BorderRadius.circular(6),
                                   ),
                                   child: const Text(
@@ -136,7 +165,9 @@ class TimelineWidget extends StatelessWidget {
                             step['desc']!,
                             style: TextStyle(
                               fontSize: 12,
-                              color: isCurrent ? AppColors.textSecondary : AppColors.textMuted,
+                              color: isCurrent
+                                  ? AppColors.textSecondary
+                                  : AppColors.textMuted,
                             ),
                           ),
                         ],
@@ -170,7 +201,7 @@ class TimelineWidget extends StatelessWidget {
         width: 24,
         height: 24,
         decoration: BoxDecoration(
-          color: AppColors.primary.withOpacity(0.15),
+          color: AppColors.primary.withValues(alpha: 0.15),
           shape: BoxShape.circle,
           border: Border.all(color: AppColors.primary, width: 2),
         ),

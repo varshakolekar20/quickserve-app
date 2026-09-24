@@ -6,7 +6,8 @@ import '../models/service_request.dart';
 import '../models/status_history.dart';
 
 class SupabaseCustomerService {
-  static final SupabaseCustomerService instance = SupabaseCustomerService._internal();
+  static final SupabaseCustomerService instance =
+      SupabaseCustomerService._internal();
   SupabaseCustomerService._internal();
 
   SupabaseClient? _client;
@@ -18,7 +19,8 @@ class SupabaseCustomerService {
   );
   static const String defaultAnonKey = String.fromEnvironment(
     'SUPABASE_ANON_KEY',
-    defaultValue: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy_anon_key_quickserve_development',
+    defaultValue:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy_anon_key_quickserve_development',
   );
 
   bool _isMockMode = false;
@@ -38,16 +40,18 @@ class SupabaseCustomerService {
     try {
       if (targetUrl.contains('demo-quickserve')) {
         _isMockMode = true;
-        debugPrint('[QuickServe Customer App] Running in local demo/mock sandbox mode.');
+        debugPrint(
+            '[QuickServe Customer App] Running in local demo/mock sandbox mode.');
       } else {
         await Supabase.initialize(
           url: targetUrl,
-          anonKey: targetKey,
+          anonKey: targetKey, // ignore: deprecated_member_use
           debug: kDebugMode,
         );
         _client = Supabase.instance.client;
         _isMockMode = false;
-        debugPrint('[QuickServe Customer App] Connected to live Supabase backend: $targetUrl');
+        debugPrint(
+            '[QuickServe Customer App] Connected to live Supabase backend: $targetUrl');
       }
     } catch (e) {
       debugPrint('[QuickServe Customer App] Fallback to local mock mode: $e');
@@ -116,11 +120,8 @@ class SupabaseCustomerService {
   Future<UserProfile?> fetchProfile(String userId) async {
     if (_isMockMode || _client == null) return null;
     try {
-      final data = await client
-          .from('profiles')
-          .select()
-          .eq('id', userId)
-          .maybeSingle();
+      final data =
+          await client.from('profiles').select().eq('id', userId).maybeSingle();
       if (data == null) return null;
       return UserProfile.fromJson(data);
     } catch (e) {
@@ -162,28 +163,32 @@ class SupabaseCustomerService {
         ServiceItem(
           id: '11111111-1111-1111-1111-111111111101',
           name: 'AC Servicing',
-          description: 'Comprehensive cooling diagnostics, deep filter cleaning, refrigerant leak test.',
+          description:
+              'Comprehensive cooling diagnostics, deep filter cleaning, refrigerant leak test.',
           icon: 'ac_unit',
           isActive: true,
         ),
         ServiceItem(
           id: '11111111-1111-1111-1111-111111111102',
           name: 'Plumbing',
-          description: 'Leak detection, pipe repair, faucet replacement, drainage unclogging.',
+          description:
+              'Leak detection, pipe repair, faucet replacement, drainage unclogging.',
           icon: 'plumbing',
           isActive: true,
         ),
         ServiceItem(
           id: '11111111-1111-1111-1111-111111111103',
           name: 'Electrical',
-          description: 'Short circuit troubleshooting, wiring inspection, breaker panel upgrade.',
+          description:
+              'Short circuit troubleshooting, wiring inspection, breaker panel upgrade.',
           icon: 'bolt',
           isActive: true,
         ),
         ServiceItem(
           id: '11111111-1111-1111-1111-111111111104',
           name: 'Cleaning',
-          description: 'Deep residential cleaning, kitchen sanitation, bathroom scrub, upholstery.',
+          description:
+              'Deep residential cleaning, kitchen sanitation, bathroom scrub, upholstery.',
           icon: 'cleaning_services',
           isActive: true,
         ),
@@ -195,7 +200,9 @@ class SupabaseCustomerService {
           .select()
           .eq('is_active', true)
           .order('name', ascending: true);
-      return (response as List).map((json) => ServiceItem.fromJson(json)).toList();
+      return (response as List)
+          .map((json) => ServiceItem.fromJson(json))
+          .toList();
     } catch (e) {
       debugPrint('[QuickServe Customer App] Fetch services error: $e');
       return [];
@@ -219,7 +226,9 @@ class SupabaseCustomerService {
           ''')
           .eq('customer_id', customerId)
           .order('created_at', ascending: false);
-      return (response as List).map((json) => ServiceRequest.fromJson(json)).toList();
+      return (response as List)
+          .map((json) => ServiceRequest.fromJson(json))
+          .toList();
     } catch (e) {
       debugPrint('[QuickServe Customer App] Fetch requests error: $e');
       return [];
@@ -264,15 +273,12 @@ class SupabaseCustomerService {
         'status': 'CREATED',
       };
 
-      final response = await client
-          .from('service_requests')
-          .insert(payload)
-          .select('''
+      final response =
+          await client.from('service_requests').insert(payload).select('''
             *,
             service:services(*),
             agent:profiles!service_requests_agent_id_fkey(*)
-          ''')
-          .single();
+          ''').single();
       return ServiceRequest.fromJson(response);
     } catch (e) {
       debugPrint('[QuickServe Customer App] Create request error: $e');
@@ -285,8 +291,7 @@ class SupabaseCustomerService {
     try {
       await client
           .from('service_requests')
-          .update({'status': 'CANCELLED'})
-          .eq('id', requestId);
+          .update({'status': 'CANCELLED'}).eq('id', requestId);
     } catch (e) {
       debugPrint('[QuickServe Customer App] Cancel request error: $e');
       rethrow;
@@ -296,15 +301,13 @@ class SupabaseCustomerService {
   Future<List<StatusHistory>> fetchRequestHistory(String requestId) async {
     if (_isMockMode || _client == null) return [];
     try {
-      final response = await client
-          .from('request_status_history')
-          .select('''
+      final response = await client.from('request_status_history').select('''
             *,
             changer:profiles!request_status_history_changed_by_fkey(full_name, role)
-          ''')
-          .eq('request_id', requestId)
-          .order('created_at', ascending: true);
-      return (response as List).map((json) => StatusHistory.fromJson(json)).toList();
+          ''').eq('request_id', requestId).order('created_at', ascending: true);
+      return (response as List)
+          .map((json) => StatusHistory.fromJson(json))
+          .toList();
     } catch (e) {
       debugPrint('[QuickServe Customer App] History fetch error: $e');
       return [];
@@ -312,7 +315,8 @@ class SupabaseCustomerService {
   }
 
   // Real-time subscription to status changes
-  RealtimeChannel? subscribeToCustomerRequests(String customerId, VoidCallback onUpdate) {
+  RealtimeChannel? subscribeToCustomerRequests(
+      String customerId, VoidCallback onUpdate) {
     if (_isMockMode || _client == null) return null;
     return client
         .channel('public:service_requests:customer_id=eq.$customerId')
@@ -340,16 +344,14 @@ class SupabaseCustomerService {
       return [];
     }
     try {
-      final response = await client
-          .from('service_requests')
-          .select('''
+      final response = await client.from('service_requests').select('''
             *,
             service:services(*),
             customer:profiles!service_requests_customer_id_fkey(*)
-          ''')
-          .eq('agent_id', agentId)
-          .order('created_at', ascending: false);
-      return (response as List).map((json) => ServiceRequest.fromJson(json)).toList();
+          ''').eq('agent_id', agentId).order('created_at', ascending: false);
+      return (response as List)
+          .map((json) => ServiceRequest.fromJson(json))
+          .toList();
     } catch (e) {
       debugPrint('[QuickServe Customer App] Fetch agent requests error: $e');
       return [];
@@ -370,10 +372,7 @@ class SupabaseCustomerService {
       if (note != null && note.isNotEmpty) {
         payload['notes'] = note;
       }
-      await client
-          .from('service_requests')
-          .update(payload)
-          .eq('id', requestId);
+      await client.from('service_requests').update(payload).eq('id', requestId);
     } catch (e) {
       debugPrint('[QuickServe Customer App] Update agent status error: $e');
       rethrow;

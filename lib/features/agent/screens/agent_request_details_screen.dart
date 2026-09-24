@@ -19,10 +19,12 @@ class AgentRequestDetailsScreen extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<AgentRequestDetailsScreen> createState() => _AgentRequestDetailsScreenState();
+  ConsumerState<AgentRequestDetailsScreen> createState() =>
+      _AgentRequestDetailsScreenState();
 }
 
-class _AgentRequestDetailsScreenState extends ConsumerState<AgentRequestDetailsScreen> {
+class _AgentRequestDetailsScreenState
+    extends ConsumerState<AgentRequestDetailsScreen> {
   final _noteController = TextEditingController();
 
   @override
@@ -40,11 +42,14 @@ class _AgentRequestDetailsScreenState extends ConsumerState<AgentRequestDetailsS
     super.dispose();
   }
 
-  void _handleStatusTransition(ServiceRequest currentReq, String nextStatus) async {
+  void _handleStatusTransition(
+      ServiceRequest currentReq, String nextStatus) async {
     final success = await ref.read(requestsProvider.notifier).updateAgentStatus(
           requestId: currentReq.id,
           targetStatus: nextStatus,
-          note: _noteController.text.trim().isNotEmpty ? _noteController.text.trim() : null,
+          note: _noteController.text.trim().isNotEmpty
+              ? _noteController.text.trim()
+              : null,
         );
 
     if (success && mounted) {
@@ -123,7 +128,9 @@ class _AgentRequestDetailsScreenState extends ConsumerState<AgentRequestDetailsS
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('Job Status', style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+                      const Text('Job Status',
+                          style: TextStyle(
+                              fontSize: 12, color: AppColors.textSecondary)),
                       const SizedBox(height: 4),
                       StatusBadge(status: currentReq.status),
                     ],
@@ -131,19 +138,20 @@ class _AgentRequestDetailsScreenState extends ConsumerState<AgentRequestDetailsS
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      const Text('Urgency', style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+                      const Text('Urgency',
+                          style: TextStyle(
+                              fontSize: 12, color: AppColors.textSecondary)),
                       const SizedBox(height: 4),
-                      StatusBadge(status: currentReq.priority, isPriority: true),
+                      StatusBadge(
+                          status: currentReq.priority, isPriority: true),
                     ],
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 18),
-
             TimelineWidget(currentStatus: currentReq.status),
             const SizedBox(height: 18),
-
             Container(
               padding: const EdgeInsets.all(18),
               decoration: BoxDecoration(
@@ -156,21 +164,27 @@ class _AgentRequestDetailsScreenState extends ConsumerState<AgentRequestDetailsS
                 children: [
                   const Text(
                     'Customer & Site Contact',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: AppColors.textPrimary),
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.textPrimary),
                   ),
                   const SizedBox(height: 12),
-                  _buildDetailRow(Icons.person, 'Customer Name', currentReq.customer?.fullName ?? 'Varsha Kolekar'),
+                  _buildDetailRow(Icons.person, 'Customer Name',
+                      currentReq.customer?.fullName ?? 'Varsha Kolekar'),
                   const SizedBox(height: 10),
-                  _buildDetailRow(Icons.phone, 'Contact Phone', currentReq.customer?.phone ?? '+1 (555) 012-7711'),
+                  _buildDetailRow(Icons.phone, 'Contact Phone',
+                      currentReq.customer?.phone ?? '+1 (555) 012-7711'),
                   const SizedBox(height: 10),
-                  _buildDetailRow(Icons.location_on, 'Service Address', currentReq.address),
+                  _buildDetailRow(
+                      Icons.location_on, 'Service Address', currentReq.address),
                   const SizedBox(height: 10),
-                  _buildDetailRow(Icons.event, 'Preferred Appointment', '${DateFormatter.formatDate(currentReq.preferredDate)} • ${currentReq.preferredTime}'),
+                  _buildDetailRow(Icons.event, 'Preferred Appointment',
+                      '${DateFormatter.formatDate(currentReq.preferredDate)} • ${currentReq.preferredTime}'),
                 ],
               ),
             ),
             const SizedBox(height: 18),
-
             Container(
               padding: const EdgeInsets.all(18),
               decoration: BoxDecoration(
@@ -183,23 +197,31 @@ class _AgentRequestDetailsScreenState extends ConsumerState<AgentRequestDetailsS
                 children: [
                   const Text(
                     'Scope of Work',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: AppColors.textPrimary),
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.textPrimary),
                   ),
                   const SizedBox(height: 10),
                   Text(
                     currentReq.service?.name ?? 'General Maintenance',
-                    style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: AppColors.primary),
+                    style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.primary),
                   ),
                   const SizedBox(height: 6),
                   Text(
                     currentReq.description,
-                    style: const TextStyle(fontSize: 14, color: AppColors.textSecondary, height: 1.4),
+                    style: const TextStyle(
+                        fontSize: 14,
+                        color: AppColors.textSecondary,
+                        height: 1.4),
                   ),
                 ],
               ),
             ),
             const SizedBox(height: 18),
-
             Container(
               padding: const EdgeInsets.all(18),
               decoration: BoxDecoration(
@@ -212,20 +234,26 @@ class _AgentRequestDetailsScreenState extends ConsumerState<AgentRequestDetailsS
                 children: [
                   const Text(
                     'Work Notes & Observations',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: AppColors.textPrimary),
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.textPrimary),
                   ),
                   const SizedBox(height: 8),
                   const Text(
                     'Record diagnosis details, parts used, or testing findings for customer and admin records.',
-                    style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
+                    style:
+                        TextStyle(fontSize: 12, color: AppColors.textSecondary),
                   ),
                   const SizedBox(height: 12),
                   TextField(
                     controller: _noteController,
                     maxLines: 3,
                     decoration: InputDecoration(
-                      hintText: 'Enter field observations, repairs made, parts replaced...',
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                      hintText:
+                          'Enter field observations, repairs made, parts replaced...',
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12)),
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -241,7 +269,6 @@ class _AgentRequestDetailsScreenState extends ConsumerState<AgentRequestDetailsS
               ),
             ),
             const SizedBox(height: 24),
-
             if (isAssignedToCurrentAgent) ...[
               if (currentReq.status == 'ASSIGNED')
                 CustomButton(
@@ -249,7 +276,8 @@ class _AgentRequestDetailsScreenState extends ConsumerState<AgentRequestDetailsS
                   backgroundColor: AppColors.statusAccepted,
                   icon: Icons.assignment_turned_in,
                   isLoading: requestsState.isSubmitting,
-                  onPressed: () => _handleStatusTransition(currentReq, 'ACCEPTED'),
+                  onPressed: () =>
+                      _handleStatusTransition(currentReq, 'ACCEPTED'),
                 )
               else if (currentReq.status == 'ACCEPTED')
                 CustomButton(
@@ -257,7 +285,8 @@ class _AgentRequestDetailsScreenState extends ConsumerState<AgentRequestDetailsS
                   backgroundColor: AppColors.statusInProgress,
                   icon: Icons.play_arrow_rounded,
                   isLoading: requestsState.isSubmitting,
-                  onPressed: () => _handleStatusTransition(currentReq, 'IN_PROGRESS'),
+                  onPressed: () =>
+                      _handleStatusTransition(currentReq, 'IN_PROGRESS'),
                 )
               else if (currentReq.status == 'IN_PROGRESS')
                 CustomButton(
@@ -265,14 +294,15 @@ class _AgentRequestDetailsScreenState extends ConsumerState<AgentRequestDetailsS
                   backgroundColor: AppColors.statusCompleted,
                   icon: Icons.task_alt,
                   isLoading: requestsState.isSubmitting,
-                  onPressed: () => _handleStatusTransition(currentReq, 'COMPLETED'),
+                  onPressed: () =>
+                      _handleStatusTransition(currentReq, 'COMPLETED'),
                 )
               else if (currentReq.status == 'COMPLETED')
                 Container(
                   width: double.infinity,
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: AppColors.success.withOpacity(0.12),
+                    color: AppColors.success.withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Row(
@@ -282,7 +312,9 @@ class _AgentRequestDetailsScreenState extends ConsumerState<AgentRequestDetailsS
                       SizedBox(width: 8),
                       Text(
                         'This request has been successfully completed.',
-                        style: TextStyle(fontWeight: FontWeight.w700, color: AppColors.success),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.success),
                       ),
                     ],
                   ),
@@ -292,16 +324,16 @@ class _AgentRequestDetailsScreenState extends ConsumerState<AgentRequestDetailsS
                 width: double.infinity,
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: AppColors.error.withOpacity(0.1),
+                  color: AppColors.error.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: const Text(
                   'Access restricted: You are not the assigned technician for this request.',
-                  style: TextStyle(color: AppColors.error, fontWeight: FontWeight.w600),
+                  style: TextStyle(
+                      color: AppColors.error, fontWeight: FontWeight.w600),
                   textAlign: TextAlign.center,
                 ),
               ),
-
             const SizedBox(height: 30),
           ],
         ),
@@ -319,9 +351,15 @@ class _AgentRequestDetailsScreenState extends ConsumerState<AgentRequestDetailsS
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(label, style: const TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+              Text(label,
+                  style: const TextStyle(
+                      fontSize: 12, color: AppColors.textSecondary)),
               const SizedBox(height: 2),
-              Text(value, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textPrimary)),
+              Text(value,
+                  style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textPrimary)),
             ],
           ),
         ),

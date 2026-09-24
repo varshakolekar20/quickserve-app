@@ -20,7 +20,8 @@ import '../../features/agent/screens/agent_request_details_screen.dart';
 import '../../models/service_item.dart';
 import '../../models/service_request.dart';
 
-final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
+final GlobalKey<NavigatorState> _rootNavigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'root');
 
 final GoRouter appRouter = GoRouter(
   navigatorKey: _rootNavigatorKey,

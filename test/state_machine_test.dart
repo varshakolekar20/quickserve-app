@@ -7,7 +7,8 @@ void main() {
       expect(StatusHelper.isValidTransition('CREATED', 'ASSIGNED'), isTrue);
       expect(StatusHelper.isValidTransition('ASSIGNED', 'ACCEPTED'), isTrue);
       expect(StatusHelper.isValidTransition('ACCEPTED', 'IN_PROGRESS'), isTrue);
-      expect(StatusHelper.isValidTransition('IN_PROGRESS', 'COMPLETED'), isTrue);
+      expect(
+          StatusHelper.isValidTransition('IN_PROGRESS', 'COMPLETED'), isTrue);
     });
 
     test('Cancellation transitions succeed for eligible initial statuses', () {
@@ -17,16 +18,19 @@ void main() {
 
     test('Cancellation is forbidden once work is accepted or in progress', () {
       expect(StatusHelper.isValidTransition('ACCEPTED', 'CANCELLED'), isFalse);
-      expect(StatusHelper.isValidTransition('IN_PROGRESS', 'CANCELLED'), isFalse);
+      expect(
+          StatusHelper.isValidTransition('IN_PROGRESS', 'CANCELLED'), isFalse);
       expect(StatusHelper.isValidTransition('COMPLETED', 'CANCELLED'), isFalse);
     });
 
-    test('Illegal status jumps and backwards transitions are strictly rejected', () {
+    test('Illegal status jumps and backwards transitions are strictly rejected',
+        () {
       expect(StatusHelper.isValidTransition('CREATED', 'IN_PROGRESS'), isFalse);
       expect(StatusHelper.isValidTransition('CREATED', 'COMPLETED'), isFalse);
       expect(StatusHelper.isValidTransition('ASSIGNED', 'COMPLETED'), isFalse);
       expect(StatusHelper.isValidTransition('ACCEPTED', 'COMPLETED'), isFalse);
-      expect(StatusHelper.isValidTransition('COMPLETED', 'IN_PROGRESS'), isFalse);
+      expect(
+          StatusHelper.isValidTransition('COMPLETED', 'IN_PROGRESS'), isFalse);
       expect(StatusHelper.isValidTransition('COMPLETED', 'CREATED'), isFalse);
       expect(StatusHelper.isValidTransition('CANCELLED', 'CREATED'), isFalse);
       expect(StatusHelper.isValidTransition('CANCELLED', 'ASSIGNED'), isFalse);

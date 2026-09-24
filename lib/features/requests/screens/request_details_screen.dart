@@ -19,7 +19,8 @@ class RequestDetailsScreen extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<RequestDetailsScreen> createState() => _RequestDetailsScreenState();
+  ConsumerState<RequestDetailsScreen> createState() =>
+      _RequestDetailsScreenState();
 }
 
 class _RequestDetailsScreenState extends ConsumerState<RequestDetailsScreen> {
@@ -43,7 +44,8 @@ class _RequestDetailsScreenState extends ConsumerState<RequestDetailsScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('Keep Request', style: TextStyle(color: AppColors.textSecondary)),
+            child: const Text('Keep Request',
+                style: TextStyle(color: AppColors.textSecondary)),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
@@ -52,7 +54,9 @@ class _RequestDetailsScreenState extends ConsumerState<RequestDetailsScreen> {
             ),
             onPressed: () async {
               Navigator.pop(ctx);
-              final success = await ref.read(requestsProvider.notifier).cancelRequest(currentReq.id);
+              final success = await ref
+                  .read(requestsProvider.notifier)
+                  .cancelRequest(currentReq.id);
               if (success && mounted) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
@@ -116,7 +120,8 @@ class _RequestDetailsScreenState extends ConsumerState<RequestDetailsScreen> {
                         children: [
                           const Text(
                             'Current Status',
-                            style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
+                            style: TextStyle(
+                                fontSize: 12, color: AppColors.textSecondary),
                           ),
                           const SizedBox(height: 4),
                           StatusBadge(status: currentReq.status),
@@ -127,10 +132,12 @@ class _RequestDetailsScreenState extends ConsumerState<RequestDetailsScreen> {
                         children: [
                           const Text(
                             'Urgency',
-                            style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
+                            style: TextStyle(
+                                fontSize: 12, color: AppColors.textSecondary),
                           ),
                           const SizedBox(height: 4),
-                          StatusBadge(status: currentReq.priority, isPriority: true),
+                          StatusBadge(
+                              status: currentReq.priority, isPriority: true),
                         ],
                       ),
                     ],
@@ -143,7 +150,8 @@ class _RequestDetailsScreenState extends ConsumerState<RequestDetailsScreen> {
                     children: [
                       const Text(
                         'Submitted On:',
-                        style: TextStyle(fontSize: 13, color: AppColors.textSecondary),
+                        style: TextStyle(
+                            fontSize: 13, color: AppColors.textSecondary),
                       ),
                       Text(
                         DateFormatter.formatDateTime(currentReq.createdAt),
@@ -177,7 +185,10 @@ class _RequestDetailsScreenState extends ConsumerState<RequestDetailsScreen> {
                 children: [
                   const Text(
                     'Booking Information',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: AppColors.textPrimary),
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.textPrimary),
                   ),
                   const SizedBox(height: 14),
                   _buildDetailRow(
@@ -227,7 +238,10 @@ class _RequestDetailsScreenState extends ConsumerState<RequestDetailsScreen> {
                 children: [
                   const Text(
                     'Assigned Field Technician',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: AppColors.textPrimary),
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.textPrimary),
                   ),
                   const SizedBox(height: 14),
                   if (currentReq.agent != null)
@@ -237,10 +251,11 @@ class _RequestDetailsScreenState extends ConsumerState<RequestDetailsScreen> {
                           width: 44,
                           height: 44,
                           decoration: BoxDecoration(
-                            color: AppColors.primary.withOpacity(0.1),
+                            color: AppColors.primary.withValues(alpha: 0.1),
                             shape: BoxShape.circle,
                           ),
-                          child: const Icon(Icons.person, color: AppColors.primary, size: 24),
+                          child: const Icon(Icons.person,
+                              color: AppColors.primary, size: 24),
                         ),
                         const SizedBox(width: 14),
                         Expanded(
@@ -258,7 +273,10 @@ class _RequestDetailsScreenState extends ConsumerState<RequestDetailsScreen> {
                               const SizedBox(height: 2),
                               const Text(
                                 'Certified Service Agent',
-                                style: TextStyle(fontSize: 12, color: AppColors.success, fontWeight: FontWeight.w600),
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color: AppColors.success,
+                                    fontWeight: FontWeight.w600),
                               ),
                             ],
                           ),
@@ -271,16 +289,18 @@ class _RequestDetailsScreenState extends ConsumerState<RequestDetailsScreen> {
                         Container(
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
-                            color: AppColors.cardBorder.withOpacity(0.4),
+                            color: AppColors.cardBorder.withValues(alpha: 0.4),
                             shape: BoxShape.circle,
                           ),
-                          child: const Icon(Icons.person_search_outlined, color: AppColors.textMuted, size: 22),
+                          child: const Icon(Icons.person_search_outlined,
+                              color: AppColors.textMuted, size: 22),
                         ),
                         const SizedBox(width: 12),
                         const Expanded(
                           child: Text(
                             'Technician assignment in progress. Admin dispatch will allocate a verified specialist soon.',
-                            style: TextStyle(fontSize: 13, color: AppColors.textSecondary),
+                            style: TextStyle(
+                                fontSize: 13, color: AppColors.textSecondary),
                           ),
                         ),
                       ],
@@ -304,18 +324,23 @@ class _RequestDetailsScreenState extends ConsumerState<RequestDetailsScreen> {
                   children: [
                     const Row(
                       children: [
-                        Icon(Icons.notes_rounded, size: 18, color: Color(0xFFD97706)),
+                        Icon(Icons.notes_rounded,
+                            size: 18, color: Color(0xFFD97706)),
                         SizedBox(width: 8),
                         Text(
                           'Technician Work Notes',
-                          style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700, color: Color(0xFF92400E)),
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w700,
+                              color: Color(0xFF92400E)),
                         ),
                       ],
                     ),
                     const SizedBox(height: 8),
                     Text(
                       currentReq.notes!,
-                      style: const TextStyle(fontSize: 13, color: Color(0xFF78350F), height: 1.4),
+                      style: const TextStyle(
+                          fontSize: 13, color: Color(0xFF78350F), height: 1.4),
                     ),
                   ],
                 ),
@@ -351,12 +376,18 @@ class _RequestDetailsScreenState extends ConsumerState<RequestDetailsScreen> {
             children: [
               Text(
                 label,
-                style: const TextStyle(fontSize: 12, color: AppColors.textSecondary, fontWeight: FontWeight.w500),
+                style: const TextStyle(
+                    fontSize: 12,
+                    color: AppColors.textSecondary,
+                    fontWeight: FontWeight.w500),
               ),
               const SizedBox(height: 2),
               Text(
                 value,
-                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
+                style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.textPrimary),
               ),
             ],
           ),

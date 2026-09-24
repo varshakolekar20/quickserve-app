@@ -37,11 +37,11 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     if (!_formKey.currentState!.validate()) return;
 
     final success = await ref.read(authProvider.notifier).register(
-      fullName: _fullNameController.text,
-      email: _emailController.text,
-      phone: _phoneController.text,
-      password: _passwordController.text,
-    );
+          fullName: _fullNameController.text,
+          email: _emailController.text,
+          phone: _phoneController.text,
+          password: _passwordController.text,
+        );
 
     if (success && mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -52,7 +52,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
       );
       context.go('/home');
     } else if (mounted) {
-      final error = ref.read(authProvider).errorMessage ?? 'Registration failed.';
+      final error =
+          ref.read(authProvider).errorMessage ?? 'Registration failed.';
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(error),
@@ -140,7 +141,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   hint: 'Re-enter password',
                   prefixIcon: Icons.lock_outline,
                   isPassword: true,
-                  validator: (v) => Validators.validateConfirmPassword(v, _passwordController.text),
+                  validator: (v) => Validators.validateConfirmPassword(
+                      v, _passwordController.text),
                 ),
                 const SizedBox(height: 28),
                 CustomButton(
@@ -154,7 +156,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   children: [
                     const Text(
                       'Already have an account? ',
-                      style: TextStyle(color: AppColors.textSecondary, fontSize: 14),
+                      style: TextStyle(
+                          color: AppColors.textSecondary, fontSize: 14),
                     ),
                     GestureDetector(
                       onTap: () => context.pop(),

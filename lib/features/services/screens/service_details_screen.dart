@@ -22,7 +22,8 @@ class ServiceDetailsScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: Text(title, style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 18)),
+        title: Text(title,
+            style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 18)),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20),
           onPressed: () => context.pop(),
@@ -50,10 +51,11 @@ class ServiceDetailsScreen extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.2),
+                      color: Colors.white.withValues(alpha: 0.2),
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.build_rounded, size: 48, color: Colors.white),
+                    child: const Icon(Icons.build_rounded,
+                        size: 48, color: Colors.white),
                   ),
                   const SizedBox(height: 16),
                   Text(
@@ -67,9 +69,10 @@ class ServiceDetailsScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 6),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.2),
+                      color: Colors.white.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: const Text(
@@ -100,23 +103,33 @@ class ServiceDetailsScreen extends StatelessWidget {
                 children: [
                   const Text(
                     'Service Scope & Highlights',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: AppColors.textPrimary),
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.textPrimary),
                   ),
                   const SizedBox(height: 10),
                   Text(
                     description,
-                    style: const TextStyle(fontSize: 14, color: AppColors.textSecondary, height: 1.5),
+                    style: const TextStyle(
+                        fontSize: 14,
+                        color: AppColors.textSecondary,
+                        height: 1.5),
                   ),
                   const SizedBox(height: 18),
                   const Divider(color: AppColors.divider, height: 1),
                   const SizedBox(height: 16),
-                  _buildFeatureRow(Icons.check_circle_outline, 'Verified & Background-Checked Specialists'),
+                  _buildFeatureRow(Icons.check_circle_outline,
+                      'Verified & Background-Checked Specialists'),
                   const SizedBox(height: 10),
-                  _buildFeatureRow(Icons.schedule_outlined, 'Flexible Preferred Date & Time Slots'),
+                  _buildFeatureRow(Icons.schedule_outlined,
+                      'Flexible Preferred Date & Time Slots'),
                   const SizedBox(height: 10),
-                  _buildFeatureRow(Icons.receipt_long_outlined, 'Automatic Unique Request Reference ID'),
+                  _buildFeatureRow(Icons.receipt_long_outlined,
+                      'Automatic Unique Request Reference ID'),
                   const SizedBox(height: 10),
-                  _buildFeatureRow(Icons.security_outlined, 'Full Real-Time Status Tracking'),
+                  _buildFeatureRow(Icons.security_outlined,
+                      'Full Real-Time Status Tracking'),
                 ],
               ),
             ),
@@ -146,7 +159,10 @@ class ServiceDetailsScreen extends StatelessWidget {
         Expanded(
           child: Text(
             text,
-            style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
+            style: const TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: AppColors.textPrimary),
           ),
         ),
       ],

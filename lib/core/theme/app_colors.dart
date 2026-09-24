@@ -21,12 +21,12 @@ class AppColors {
   static const Color textMuted = Color(0xFF94A3B8);
 
   // Status Colors for Request Lifecycle
-  static const Color statusCreated = Color(0xFF0284C7);    // Sky Blue
-  static const Color statusAssigned = Color(0xFF6366F1);   // Indigo
-  static const Color statusAccepted = Color(0xFF8B5CF6);   // Violet
+  static const Color statusCreated = Color(0xFF0284C7); // Sky Blue
+  static const Color statusAssigned = Color(0xFF6366F1); // Indigo
+  static const Color statusAccepted = Color(0xFF8B5CF6); // Violet
   static const Color statusInProgress = Color(0xFFD97706); // Amber
-  static const Color statusCompleted = Color(0xFF10B981);  // Emerald
-  static const Color statusCancelled = Color(0xFFEF4444);  // Red
+  static const Color statusCompleted = Color(0xFF10B981); // Emerald
+  static const Color statusCancelled = Color(0xFFEF4444); // Red
 
   // Priority Colors
   static const Color priorityLow = Color(0xFF10B981);

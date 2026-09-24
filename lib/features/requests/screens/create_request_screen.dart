@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../core/constants/app_strings.dart';
 import '../../../core/utils/validators.dart';
 import '../../../widgets/custom_button.dart';
 import '../../../widgets/custom_text_field.dart';
@@ -22,14 +21,16 @@ class CreateRequestScreen extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<CreateRequestScreen> createState() => _CreateRequestScreenState();
+  ConsumerState<CreateRequestScreen> createState() =>
+      _CreateRequestScreenState();
 }
 
 class _CreateRequestScreenState extends ConsumerState<CreateRequestScreen> {
   final _formKey = GlobalKey<FormState>();
   String? _selectedServiceId;
   final _descriptionController = TextEditingController();
-  final _addressController = TextEditingController(text: '742 Evergreen Terrace, Springfield');
+  final _addressController =
+      TextEditingController(text: '742 Evergreen Terrace, Springfield');
   DateTime _preferredDate = DateTime.now().add(const Duration(days: 1));
   String _preferredTime = '10:00 AM - 12:00 PM';
   String _priority = 'MEDIUM';
@@ -52,7 +53,9 @@ class _CreateRequestScreenState extends ConsumerState<CreateRequestScreen> {
       if (_selectedServiceId == null && servicesState.services.isNotEmpty) {
         if (widget.initialServiceName != null) {
           final match = servicesState.services.firstWhere(
-            (s) => s.name.toLowerCase().contains(widget.initialServiceName!.toLowerCase()),
+            (s) => s.name
+                .toLowerCase()
+                .contains(widget.initialServiceName!.toLowerCase()),
             orElse: () => servicesState.services.first,
           );
           setState(() => _selectedServiceId = match.id);
@@ -92,19 +95,20 @@ class _CreateRequestScreenState extends ConsumerState<CreateRequestScreen> {
     }
 
     final authState = ref.read(authProvider);
-    final serviceItem = ref.read(servicesProvider.notifier).getServiceById(_selectedServiceId!);
+    final serviceItem =
+        ref.read(servicesProvider.notifier).getServiceById(_selectedServiceId!);
     final customerId = authState.profile?.id ?? 'demo-customer';
 
     final created = await ref.read(requestsProvider.notifier).createRequest(
-      customerId: customerId,
-      serviceId: _selectedServiceId!,
-      description: _descriptionController.text,
-      preferredDate: _preferredDate,
-      preferredTime: _preferredTime,
-      address: _addressController.text,
-      priority: _priority,
-      serviceItem: serviceItem,
-    );
+          customerId: customerId,
+          serviceId: _selectedServiceId!,
+          description: _descriptionController.text,
+          preferredDate: _preferredDate,
+          preferredTime: _preferredTime,
+          address: _addressController.text,
+          priority: _priority,
+          serviceItem: serviceItem,
+        );
 
     if (created != null && mounted) {
       context.replace('/request-success', extra: created.requestId);
@@ -139,14 +143,19 @@ class _CreateRequestScreenState extends ConsumerState<CreateRequestScreen> {
                 // Service Type Dropdown
                 const Text(
                   'Select Service Category',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textPrimary),
                 ),
                 const SizedBox(height: 6),
                 DropdownButtonFormField<String>(
-                  value: _selectedServiceId,
+                  initialValue: _selectedServiceId,
                   decoration: InputDecoration(
-                    prefixIcon: const Icon(Icons.handyman_outlined, color: AppColors.textSecondary, size: 20),
-                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                    prefixIcon: const Icon(Icons.handyman_outlined,
+                        color: AppColors.textSecondary, size: 20),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12)),
                   ),
                   items: servicesState.services.map((service) {
                     return DropdownMenuItem<String>(
@@ -155,7 +164,8 @@ class _CreateRequestScreenState extends ConsumerState<CreateRequestScreen> {
                     );
                   }).toList(),
                   onChanged: (val) => setState(() => _selectedServiceId = val),
-                  validator: (val) => val == null ? 'Please select a service' : null,
+                  validator: (val) =>
+                      val == null ? 'Please select a service' : null,
                 ),
                 const SizedBox(height: 18),
 
@@ -166,7 +176,8 @@ class _CreateRequestScreenState extends ConsumerState<CreateRequestScreen> {
                   hint: 'Describe the issue or required repair in detail...',
                   prefixIcon: Icons.description_outlined,
                   maxLines: 4,
-                  validator: (v) => Validators.validateRequired(v, 'Description'),
+                  validator: (v) =>
+                      Validators.validateRequired(v, 'Description'),
                 ),
                 const SizedBox(height: 18),
 
@@ -179,14 +190,18 @@ class _CreateRequestScreenState extends ConsumerState<CreateRequestScreen> {
                         children: [
                           const Text(
                             'Preferred Date',
-                            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.textPrimary),
                           ),
                           const SizedBox(height: 6),
                           InkWell(
                             onTap: _selectDate,
                             borderRadius: BorderRadius.circular(12),
                             child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 15),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 14, vertical: 15),
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(12),
@@ -194,11 +209,15 @@ class _CreateRequestScreenState extends ConsumerState<CreateRequestScreen> {
                               ),
                               child: Row(
                                 children: [
-                                  const Icon(Icons.calendar_today_outlined, size: 18, color: AppColors.textSecondary),
+                                  const Icon(Icons.calendar_today_outlined,
+                                      size: 18, color: AppColors.textSecondary),
                                   const SizedBox(width: 8),
                                   Text(
-                                    DateFormat('MMM dd, yyyy').format(_preferredDate),
-                                    style: const TextStyle(fontSize: 14, color: AppColors.textPrimary),
+                                    DateFormat('MMM dd, yyyy')
+                                        .format(_preferredDate),
+                                    style: const TextStyle(
+                                        fontSize: 14,
+                                        color: AppColors.textPrimary),
                                   ),
                                 ],
                               ),
@@ -214,24 +233,32 @@ class _CreateRequestScreenState extends ConsumerState<CreateRequestScreen> {
                         children: [
                           const Text(
                             'Time Window',
-                            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.textPrimary),
                           ),
                           const SizedBox(height: 6),
                           DropdownButtonFormField<String>(
-                            value: _preferredTime,
+                            initialValue: _preferredTime,
                             isExpanded: true,
                             decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+                              contentPadding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 14),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12)),
                             ),
                             items: _timeSlots.map((slot) {
                               return DropdownMenuItem<String>(
                                 value: slot,
-                                child: Text(slot, style: const TextStyle(fontSize: 12)),
+                                child: Text(slot,
+                                    style: const TextStyle(fontSize: 12)),
                               );
                             }).toList(),
                             onChanged: (val) {
-                              if (val != null) setState(() => _preferredTime = val);
+                              if (val != null) {
+                                setState(() => _preferredTime = val);
+                              }
                             },
                           ),
                         ],
@@ -255,7 +282,10 @@ class _CreateRequestScreenState extends ConsumerState<CreateRequestScreen> {
                 // Priority Selection
                 const Text(
                   'Job Priority',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.textPrimary),
                 ),
                 const SizedBox(height: 8),
                 Row(
@@ -263,7 +293,9 @@ class _CreateRequestScreenState extends ConsumerState<CreateRequestScreen> {
                     final isSelected = _priority == p;
                     Color pColor = p == 'HIGH'
                         ? AppColors.priorityHigh
-                        : (p == 'MEDIUM' ? AppColors.priorityMedium : AppColors.priorityLow);
+                        : (p == 'MEDIUM'
+                            ? AppColors.priorityMedium
+                            : AppColors.priorityLow);
 
                     return Expanded(
                       child: GestureDetector(
@@ -272,7 +304,9 @@ class _CreateRequestScreenState extends ConsumerState<CreateRequestScreen> {
                           margin: const EdgeInsets.symmetric(horizontal: 4),
                           padding: const EdgeInsets.symmetric(vertical: 12),
                           decoration: BoxDecoration(
-                            color: isSelected ? pColor.withOpacity(0.12) : Colors.white,
+                            color: isSelected
+                                ? pColor.withValues(alpha: 0.12)
+                                : Colors.white,
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(
                               color: isSelected ? pColor : AppColors.cardBorder,
@@ -285,7 +319,9 @@ class _CreateRequestScreenState extends ConsumerState<CreateRequestScreen> {
                               style: TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w700,
-                                color: isSelected ? pColor : AppColors.textSecondary,
+                                color: isSelected
+                                    ? pColor
+                                    : AppColors.textSecondary,
                               ),
                             ),
                           ),

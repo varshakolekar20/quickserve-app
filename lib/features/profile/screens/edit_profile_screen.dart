@@ -51,7 +51,8 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
       );
       context.pop();
     } else if (mounted) {
-      final error = ref.read(authProvider).errorMessage ?? 'Failed to update profile.';
+      final error =
+          ref.read(authProvider).errorMessage ?? 'Failed to update profile.';
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(error),
@@ -108,7 +109,8 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                       label: 'Full Name',
                       hint: 'Enter your full name',
                       prefixIcon: Icons.person_outline,
-                      validator: (val) => Validators.validateRequired(val, 'Full Name'),
+                      validator: (val) =>
+                          Validators.validateRequired(val, 'Full Name'),
                     ),
                     const SizedBox(height: 16),
                     CustomTextField(
@@ -117,7 +119,8 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                       hint: 'Enter your contact phone number',
                       prefixIcon: Icons.phone_outlined,
                       keyboardType: TextInputType.phone,
-                      validator: (val) => Validators.validateRequired(val, 'Phone Number'),
+                      validator: (val) =>
+                          Validators.validateRequired(val, 'Phone Number'),
                     ),
                   ],
                 ),

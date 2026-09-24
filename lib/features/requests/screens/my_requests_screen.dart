@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../core/constants/app_strings.dart';
 import '../../../core/utils/date_formatter.dart';
 import '../../../widgets/status_badge.dart';
 import '../../../widgets/empty_state_widget.dart';
@@ -16,7 +15,8 @@ class MyRequestsScreen extends ConsumerStatefulWidget {
   ConsumerState<MyRequestsScreen> createState() => _MyRequestsScreenState();
 }
 
-class _MyRequestsScreenState extends ConsumerState<MyRequestsScreen> with SingleTickerProviderStateMixin {
+class _MyRequestsScreenState extends ConsumerState<MyRequestsScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
@@ -52,7 +52,8 @@ class _MyRequestsScreenState extends ConsumerState<MyRequestsScreen> with Single
           indicatorColor: AppColors.primary,
           labelColor: AppColors.primary,
           unselectedLabelColor: AppColors.textSecondary,
-          labelStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
+          labelStyle:
+              const TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
           tabs: [
             Tab(text: 'Active Jobs (${activeList.length})'),
             Tab(text: 'History (${historyList.length})'),
@@ -71,12 +72,14 @@ class _MyRequestsScreenState extends ConsumerState<MyRequestsScreen> with Single
         foregroundColor: Colors.white,
         onPressed: () => context.push('/create-request'),
         icon: const Icon(Icons.add),
-        label: const Text('Book Service', style: TextStyle(fontWeight: FontWeight.w700)),
+        label: const Text('Book Service',
+            style: TextStyle(fontWeight: FontWeight.w700)),
       ),
     );
   }
 
-  Widget _buildRequestList(List<dynamic> list, {required bool isHistory, required AuthState authState}) {
+  Widget _buildRequestList(List<dynamic> list,
+      {required bool isHistory, required AuthState authState}) {
     if (list.isEmpty) {
       return EmptyStateWidget(
         icon: isHistory ? Icons.history_rounded : Icons.assignment_outlined,
@@ -85,14 +88,17 @@ class _MyRequestsScreenState extends ConsumerState<MyRequestsScreen> with Single
             ? 'Your completed or cancelled requests will appear here.'
             : 'You currently have no active service requests.',
         buttonText: isHistory ? null : 'Book a Service',
-        onButtonPressed: isHistory ? null : () => context.push('/create-request'),
+        onButtonPressed:
+            isHistory ? null : () => context.push('/create-request'),
       );
     }
 
     return RefreshIndicator(
       onRefresh: () async {
         if (authState.profile != null) {
-          await ref.read(requestsProvider.notifier).fetchCustomerRequests(authState.profile!.id);
+          await ref
+              .read(requestsProvider.notifier)
+              .fetchCustomerRequests(authState.profile!.id);
         }
       },
       child: ListView.separated(
@@ -112,7 +118,7 @@ class _MyRequestsScreenState extends ConsumerState<MyRequestsScreen> with Single
                 border: Border.all(color: AppColors.cardBorder),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.02),
+                    color: Colors.black.withValues(alpha: 0.02),
                     blurRadius: 8,
                     offset: const Offset(0, 2),
                   ),
@@ -129,10 +135,11 @@ class _MyRequestsScreenState extends ConsumerState<MyRequestsScreen> with Single
                           Container(
                             padding: const EdgeInsets.all(6),
                             decoration: BoxDecoration(
-                              color: AppColors.primary.withOpacity(0.08),
+                              color: AppColors.primary.withValues(alpha: 0.08),
                               borderRadius: BorderRadius.circular(8),
                             ),
-                            child: const Icon(Icons.receipt_long_outlined, size: 16, color: AppColors.primary),
+                            child: const Icon(Icons.receipt_long_outlined,
+                                size: 16, color: AppColors.primary),
                           ),
                           const SizedBox(width: 8),
                           Text(
@@ -149,7 +156,6 @@ class _MyRequestsScreenState extends ConsumerState<MyRequestsScreen> with Single
                     ],
                   ),
                   const SizedBox(height: 12),
-
                   Text(
                     req.service?.name ?? 'Service Request',
                     style: const TextStyle(
@@ -163,19 +169,23 @@ class _MyRequestsScreenState extends ConsumerState<MyRequestsScreen> with Single
                     req.description,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(fontSize: 13, color: AppColors.textSecondary, height: 1.3),
+                    style: const TextStyle(
+                        fontSize: 13,
+                        color: AppColors.textSecondary,
+                        height: 1.3),
                   ),
                   const SizedBox(height: 14),
-
                   const Divider(color: AppColors.divider, height: 1),
                   const SizedBox(height: 10),
                   Row(
                     children: [
-                      const Icon(Icons.calendar_today_outlined, size: 14, color: AppColors.textMuted),
+                      const Icon(Icons.calendar_today_outlined,
+                          size: 14, color: AppColors.textMuted),
                       const SizedBox(width: 4),
                       Text(
                         DateFormatter.formatDate(req.preferredDate),
-                        style: const TextStyle(fontSize: 12, color: AppColors.textSecondary),
+                        style: const TextStyle(
+                            fontSize: 12, color: AppColors.textSecondary),
                       ),
                       const Spacer(),
                       StatusBadge(status: req.priority, isPriority: true),

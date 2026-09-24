@@ -96,7 +96,8 @@ class AuthNotifier extends StateNotifier<AuthState> {
           profile: profile ??
               UserProfile(
                 id: response.user!.id,
-                fullName: response.user!.userMetadata?['full_name'] ?? 'Customer',
+                fullName:
+                    response.user!.userMetadata?['full_name'] ?? 'Customer',
                 email: response.user!.email ?? '',
                 role: 'customer',
               ),
@@ -113,7 +114,8 @@ class AuthNotifier extends StateNotifier<AuthState> {
     } catch (e) {
       state = state.copyWith(
         isLoading: false,
-        errorMessage: 'Login failed. Please verify your credentials and network connection.',
+        errorMessage:
+            'Login failed. Please verify your credentials and network connection.',
       );
       return false;
     }
@@ -183,7 +185,8 @@ class AuthNotifier extends StateNotifier<AuthState> {
     state = const AuthState();
   }
 
-  Future<bool> updateProfile({required String fullName, required String phone}) async {
+  Future<bool> updateProfile(
+      {required String fullName, required String phone}) async {
     if (state.profile == null) return false;
     state = state.copyWith(isLoading: true, errorMessage: null);
     try {
@@ -207,7 +210,8 @@ class AuthNotifier extends StateNotifier<AuthState> {
       state = state.copyWith(isLoading: false);
       return false;
     } catch (e) {
-      state = state.copyWith(isLoading: false, errorMessage: 'Failed to update profile.');
+      state = state.copyWith(
+          isLoading: false, errorMessage: 'Failed to update profile.');
       return false;
     }
   }
@@ -219,7 +223,9 @@ class AuthNotifier extends StateNotifier<AuthState> {
       state = state.copyWith(isLoading: false);
       return true;
     } catch (e) {
-      state = state.copyWith(isLoading: false, errorMessage: 'Failed to send password reset email.');
+      state = state.copyWith(
+          isLoading: false,
+          errorMessage: 'Failed to send password reset email.');
       return false;
     }
   }

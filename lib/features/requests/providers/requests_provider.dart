@@ -14,7 +14,8 @@ class RequestsState {
   final bool isLoading;
   final bool isSubmitting;
   final String? errorMessage;
-  final String filter; // 'ALL', 'ACTIVE', 'HISTORY', 'CREATED', 'ASSIGNED', 'ACCEPTED', 'IN_PROGRESS', 'COMPLETED', 'CANCELLED'
+  final String
+      filter; // 'ALL', 'ACTIVE', 'HISTORY', 'CREATED', 'ASSIGNED', 'ACCEPTED', 'IN_PROGRESS', 'COMPLETED', 'CANCELLED'
 
   const RequestsState({
     this.requests = const [],
@@ -26,11 +27,13 @@ class RequestsState {
     this.filter = 'ALL',
   });
 
-  List<ServiceRequest> get activeRequests =>
-      requests.where((r) => r.status != 'COMPLETED' && r.status != 'CANCELLED').toList();
+  List<ServiceRequest> get activeRequests => requests
+      .where((r) => r.status != 'COMPLETED' && r.status != 'CANCELLED')
+      .toList();
 
-  List<ServiceRequest> get historyRequests =>
-      requests.where((r) => r.status == 'COMPLETED' || r.status == 'CANCELLED').toList();
+  List<ServiceRequest> get historyRequests => requests
+      .where((r) => r.status == 'COMPLETED' || r.status == 'CANCELLED')
+      .toList();
 
   List<ServiceRequest> get filteredRequests {
     if (filter == 'ALL') return requests;
@@ -105,7 +108,8 @@ class RequestsNotifier extends StateNotifier<RequestsState> {
           customerId: '00000000-0000-0000-0000-000000000004',
           serviceId: electrical.id,
           service: electrical,
-          description: 'Main breaker tripping whenever the kitchen microwave is powered on.',
+          description:
+              'Main breaker tripping whenever the kitchen microwave is powered on.',
           preferredDate: now.add(const Duration(days: 1)),
           preferredTime: '10:00 AM - 12:00 PM',
           address: '742 Evergreen Terrace, Springfield',
@@ -121,7 +125,8 @@ class RequestsNotifier extends StateNotifier<RequestsState> {
           service: plumbing,
           agentId: agentMarcus.id,
           agent: agentMarcus,
-          description: 'Bathroom sink drain is clogged and water drains extremely slowly.',
+          description:
+              'Bathroom sink drain is clogged and water drains extremely slowly.',
           preferredDate: now.add(const Duration(days: 2)),
           preferredTime: '02:00 PM - 04:00 PM',
           address: '742 Evergreen Terrace, Springfield',
@@ -187,7 +192,8 @@ class RequestsNotifier extends StateNotifier<RequestsState> {
         });
       }
     } catch (e) {
-      state = state.copyWith(isLoading: false, errorMessage: 'Failed to load requests.');
+      state = state.copyWith(
+          isLoading: false, errorMessage: 'Failed to load requests.');
     }
   }
 
@@ -251,7 +257,8 @@ class RequestsNotifier extends StateNotifier<RequestsState> {
 
     final target = state.requests[idx];
     if (!StatusHelper.isCancellationAllowed(target.status)) {
-      state = state.copyWith(errorMessage: 'Only CREATED or ASSIGNED requests can be cancelled.');
+      state = state.copyWith(
+          errorMessage: 'Only CREATED or ASSIGNED requests can be cancelled.');
       return false;
     }
 
@@ -267,7 +274,8 @@ class RequestsNotifier extends StateNotifier<RequestsState> {
       );
       return true;
     } catch (e) {
-      state = state.copyWith(isSubmitting: false, errorMessage: 'Failed to cancel request.');
+      state = state.copyWith(
+          isSubmitting: false, errorMessage: 'Failed to cancel request.');
       return false;
     }
   }
@@ -322,7 +330,8 @@ class RequestsNotifier extends StateNotifier<RequestsState> {
         );
       }
     } catch (e) {
-      state = state.copyWith(isLoading: false, errorMessage: 'Failed to load technician jobs.');
+      state = state.copyWith(
+          isLoading: false, errorMessage: 'Failed to load technician jobs.');
     }
   }
 
@@ -360,7 +369,8 @@ class RequestsNotifier extends StateNotifier<RequestsState> {
       state = state.copyWith(requests: updated, isSubmitting: false);
       return true;
     } catch (e) {
-      state = state.copyWith(isSubmitting: false, errorMessage: 'Failed to update job status.');
+      state = state.copyWith(
+          isSubmitting: false, errorMessage: 'Failed to update job status.');
       return false;
     }
   }
@@ -372,6 +382,7 @@ class RequestsNotifier extends StateNotifier<RequestsState> {
   }
 }
 
-final requestsProvider = StateNotifierProvider<RequestsNotifier, RequestsState>((ref) {
+final requestsProvider =
+    StateNotifierProvider<RequestsNotifier, RequestsState>((ref) {
   return RequestsNotifier();
 });

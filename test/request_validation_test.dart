@@ -4,7 +4,8 @@ import 'package:quickserve_customer_app/models/service_request.dart';
 
 void main() {
   group('Request Creation & Format Validation Tests', () {
-    test('Sequence-generated Request ID format validation (REQ-YYYY-NNNNNN)', () {
+    test('Sequence-generated Request ID format validation (REQ-YYYY-NNNNNN)',
+        () {
       final req = ServiceRequest(
         id: 'uuid-12345',
         requestId: 'REQ-2026-000123',

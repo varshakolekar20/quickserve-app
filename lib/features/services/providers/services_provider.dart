@@ -19,7 +19,8 @@ class ServicesState {
     if (searchQuery.trim().isEmpty) return services;
     final q = searchQuery.toLowerCase();
     return services.where((s) {
-      return s.name.toLowerCase().contains(q) || s.description.toLowerCase().contains(q);
+      return s.name.toLowerCase().contains(q) ||
+          s.description.toLowerCase().contains(q);
     }).toList();
   }
 
@@ -51,7 +52,8 @@ class ServicesNotifier extends StateNotifier<ServicesState> {
       final list = await _service.fetchServices();
       state = state.copyWith(services: list, isLoading: false);
     } catch (e) {
-      state = state.copyWith(isLoading: false, errorMessage: 'Could not load service catalog.');
+      state = state.copyWith(
+          isLoading: false, errorMessage: 'Could not load service catalog.');
     }
   }
 
@@ -68,6 +70,7 @@ class ServicesNotifier extends StateNotifier<ServicesState> {
   }
 }
 
-final servicesProvider = StateNotifierProvider<ServicesNotifier, ServicesState>((ref) {
+final servicesProvider =
+    StateNotifierProvider<ServicesNotifier, ServicesState>((ref) {
   return ServicesNotifier();
 });

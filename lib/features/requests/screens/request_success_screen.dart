@@ -25,10 +25,11 @@ class RequestSuccessScreen extends StatelessWidget {
                 width: 90,
                 height: 90,
                 decoration: BoxDecoration(
-                  color: AppColors.success.withOpacity(0.12),
+                  color: AppColors.success.withValues(alpha: 0.12),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.check_circle_rounded, color: AppColors.success, size: 54),
+                child: const Icon(Icons.check_circle_rounded,
+                    color: AppColors.success, size: 54),
               ),
               const SizedBox(height: 24),
               const Text(
@@ -46,7 +47,8 @@ class RequestSuccessScreen extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 decoration: BoxDecoration(
                   color: AppColors.background,
                   borderRadius: BorderRadius.circular(10),
@@ -66,7 +68,8 @@ class RequestSuccessScreen extends StatelessWidget {
               const Text(
                 'Your service request has been submitted successfully and sent to the Admin Web Application for technician assignment.',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 13, color: AppColors.textSecondary, height: 1.4),
+                style: TextStyle(
+                    fontSize: 13, color: AppColors.textSecondary, height: 1.4),
               ),
               const SizedBox(height: 40),
               CustomButton(

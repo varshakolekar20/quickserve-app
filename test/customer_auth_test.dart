@@ -3,7 +3,9 @@ import 'package:quickserve_customer_app/models/user_profile.dart';
 
 void main() {
   group('Customer & Agent Role & Auth Unit Tests', () {
-    test('Customer registration auto-assigns customer role without role selection UI', () {
+    test(
+        'Customer registration auto-assigns customer role without role selection UI',
+        () {
       final customerProfile = UserProfile(
         id: 'cust-100',
         fullName: 'Jane Doe',

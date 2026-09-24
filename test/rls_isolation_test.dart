@@ -31,14 +31,18 @@ void main() {
       expect(StatusHelper.isCancellationAllowed(completedReq.status), isFalse);
     });
 
-    test('Agent lifecycle transitions require proper sequential state progression', () {
+    test(
+        'Agent lifecycle transitions require proper sequential state progression',
+        () {
       expect(StatusHelper.isValidTransition('ASSIGNED', 'ACCEPTED'), isTrue);
       expect(StatusHelper.isValidTransition('ACCEPTED', 'IN_PROGRESS'), isTrue);
-      expect(StatusHelper.isValidTransition('IN_PROGRESS', 'COMPLETED'), isTrue);
+      expect(
+          StatusHelper.isValidTransition('IN_PROGRESS', 'COMPLETED'), isTrue);
 
       expect(StatusHelper.isValidTransition('ASSIGNED', 'COMPLETED'), isFalse);
       expect(StatusHelper.isValidTransition('ACCEPTED', 'COMPLETED'), isFalse);
-      expect(StatusHelper.isValidTransition('COMPLETED', 'IN_PROGRESS'), isFalse);
+      expect(
+          StatusHelper.isValidTransition('COMPLETED', 'IN_PROGRESS'), isFalse);
     });
   });
 }

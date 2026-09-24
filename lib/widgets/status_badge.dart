@@ -17,16 +17,15 @@ class StatusBadge extends StatelessWidget {
         ? StatusHelper.getPriorityColor(status)
         : StatusHelper.getStatusColor(status);
 
-    final label = isPriority
-        ? status.toUpperCase()
-        : StatusHelper.getDisplayName(status);
+    final label =
+        isPriority ? status.toUpperCase() : StatusHelper.getDisplayName(status);
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.12),
+        color: color.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: color.withOpacity(0.3), width: 1),
+        border: Border.all(color: color.withValues(alpha: 0.3), width: 1),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,

@@ -12,7 +12,8 @@ class SplashScreen extends ConsumerStatefulWidget {
   ConsumerState<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends ConsumerState<SplashScreen> with SingleTickerProviderStateMixin {
+class _SplashScreenState extends ConsumerState<SplashScreen>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;
   late Animation<double> _fadeAnimation;
@@ -44,7 +45,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> with SingleTickerPr
     final authState = ref.read(authProvider);
 
     if (authState.isAuthenticated) {
-      if (authState.profile?.role == 'agent' || authState.profile?.role == 'service_agent') {
+      if (authState.profile?.role == 'agent' ||
+          authState.profile?.role == 'service_agent') {
         context.go('/agent-dashboard');
       } else {
         context.go('/home');
@@ -80,7 +82,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> with SingleTickerPr
                     borderRadius: BorderRadius.circular(26),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.primary.withOpacity(0.35),
+                        color: AppColors.primary.withValues(alpha: 0.35),
                         blurRadius: 24,
                         offset: const Offset(0, 10),
                       ),
@@ -120,7 +122,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> with SingleTickerPr
                   height: 28,
                   child: CircularProgressIndicator(
                     strokeWidth: 2.5,
-                    valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
+                    valueColor:
+                        AlwaysStoppedAnimation<Color>(AppColors.primary),
                   ),
                 ),
               ],

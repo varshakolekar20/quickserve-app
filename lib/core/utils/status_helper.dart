@@ -11,7 +11,8 @@ class StatusHelper {
   ];
 
   static bool isCancellationAllowed(String status) {
-    return status.toUpperCase() == 'CREATED' || status.toUpperCase() == 'ASSIGNED';
+    return status.toUpperCase() == 'CREATED' ||
+        status.toUpperCase() == 'ASSIGNED';
   }
 
   static bool isValidTransition(String currentStatus, String targetStatus) {

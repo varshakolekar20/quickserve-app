@@ -31,9 +31,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     if (!_formKey.currentState!.validate()) return;
 
     final success = await ref.read(authProvider.notifier).login(
-      _emailController.text,
-      _passwordController.text,
-    );
+          _emailController.text,
+          _passwordController.text,
+        );
 
     if (success && mounted) {
       final profile = ref.read(authProvider).profile;
@@ -62,7 +62,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
             child: Form(
               key: _formKey,
               child: Column(
@@ -105,7 +106,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     ),
                   ),
                   const SizedBox(height: 32),
-
                   CustomTextField(
                     controller: _emailController,
                     label: AppStrings.email,
@@ -150,7 +150,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     children: [
                       const Text(
                         "Don't have a customer account? ",
-                        style: TextStyle(color: AppColors.textSecondary, fontSize: 14),
+                        style: TextStyle(
+                            color: AppColors.textSecondary, fontSize: 14),
                       ),
                       GestureDetector(
                         onTap: () => context.push('/register'),
