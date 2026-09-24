@@ -1,0 +1,28 @@
+name: quickserve_customer_app
+description: "QuickServe - Customer Mobile Service Request Management Application"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  supabase_flutter: ^2.5.6
+  flutter_riverpod: ^2.5.1
+  go_router: ^14.2.0
+  intl: ^0.19.0
+  google_fonts: ^6.2.1
+  uuid: ^4.4.0
+
+dependency_overrides:
+  app_links: 6.3.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
