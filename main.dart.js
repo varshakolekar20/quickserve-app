@@ -100248,8 +100248,8 @@ if(s==null)throw A.f(A.aB("SupabaseCustomerService has not been initialized."))
 return s},
 e8(){var s=0,r=A.z(t.H),q=1,p=[],o=this,n,m,l,k,j,i
 var $async$e8=A.A(function(a,b){if(a===1){p.push(b)
-s=q}for(;;)switch(s){case 0:k="https://demo-quickserve.supabase.co"
-j="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy_anon_key_quickserve_development"
+s=q}for(;;)switch(s){case 0:k="https://yaqcsseiwvpayuafjuoh.supabase.co"
+j="sb_publishable_anzMLxUqin--gtgxqOk-ng_-fWqiNtv"
 q=3
 s=J.Aq(k,"demo-quickserve")?6:8
 break
