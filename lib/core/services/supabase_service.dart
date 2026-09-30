@@ -11,15 +11,14 @@ class SupabaseService {
 
   SupabaseClient? _client;
 
-  // Configuration (Can be passed via --dart-define)
+  // Configuration
   static const String defaultUrl = String.fromEnvironment(
     'SUPABASE_URL',
-    defaultValue: 'https://demo-quickserve.supabase.co',
+    defaultValue: 'https://yaqcsseiwvpayuafjuoh.supabase.co',
   );
   static const String defaultAnonKey = String.fromEnvironment(
     'SUPABASE_ANON_KEY',
-    defaultValue:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy_anon_key_quickserve_development',
+    defaultValue: 'sb_publishable_anzMLxUqin--gtgxqOk-ng_-fWqiNtv',
   );
 
   bool _isMockMode = false;
